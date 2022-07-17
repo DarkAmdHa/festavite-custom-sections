@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Posts Section</title>
+</head>
+
+<style>
+
+
+
+    .news-publication > *{
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    } 
+
+    .news-publication .container{
+        margin:auto;
+        max-width: 1140px;
+    }
+    
+    .news-publication {
+        margin: 60px auto;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+
+    .news-publication .news-publication-links {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+        position: relative;
+        width: fit-content;
+    }
+
+    .news-publication .news-publication-links:before{
+        content: '';
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        left: 0px;
+        height: 4px;
+    }
+
+    .news-publication .news-link-container:not(:last-child) .news-link{
+        display: block;
+        margin-right: 20px;
+    }
+
+    .news-link-logo{
+        transition: 0.5s ease;
+    }
+
+    .news-publication .news-link-container .news-link:hover .news-link-logo{
+        opacity: 0.56;
+    }
+
+    @media (max-width:1024px){
+        .news-link-logo{
+            width: 150px;
+        }
+    }
+
+    @media (max-width:725px){
+        .news-publication .news-publication-links{
+            flex-direction: column;
+            width: auto;
+        }
+
+        .news-link-logo{
+            width: 200px;
+        }
+    }
+</style>
+<body>
+
+
+
+</body>
+
+</html>

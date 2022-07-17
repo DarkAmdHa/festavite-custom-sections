@@ -1,0 +1,774 @@
+/*****************************Key Features *****************************/
+
+@media (max-width:625px) {
+    .key-features .multicolumn-list{
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .key-features .grid__item{
+        width: fit-content;
+        max-width: unset;
+    }
+
+    .key-features .multicolumn-card{
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .key-features .multicolumn-card__info{
+        padding:0 !important;
+    }
+
+    .key-features .multicolumn-card__image-wrapper{
+        width: fit-content;
+        margin-right: 15px;
+        margin-left: unset;
+    }
+
+    .key-features  .multicolumn-card__image{
+        margin:0 !important;
+
+    }
+}
+   
+
+/*****************************Key Features End*****************************/
+
+/**********************************TEXT SLIDER*********************/
+#slidingContainer .container{
+    display: flex;
+  margin:auto;
+}
+#slidingContainer .appearingTextContainer,
+#slidingContainer .pinnedImage{
+    width: 50%;
+}
+#slidingContainer .pinnedImage{
+    display: flex;
+    justify-content: center;
+}
+
+#slidingContainer .pinnedImage img{
+  max-width:45vw;
+}
+
+#slidingContainer .item-container > *{
+    margin: 0;
+    padding:0;
+}
+#slidingContainer img{
+    width: 70%;
+    height: fit-content;
+}
+
+#slidingContainer .appearingTextContainer{
+    position: relative;
+    height: fit-content;
+    padding-left:60px;
+}
+#slidingContainer .loadingLine{
+    position: absolute;
+  display:block;
+    left: 5.6px;
+    height: calc(100% + 25px);
+    width: 2px;
+    background-color: rgb(179, 187, 209);
+}
+
+
+#slidingContainer .slider-item .item-marker{
+    position: absolute;
+    transition: 0.5s ease;
+    left: 1px;
+    width: 8px;
+    height: 8px;
+    transition: 0.5s ease;
+    border-radius: 18px;
+    z-index: 11;
+    box-sizing: content-box !important;
+}
+
+#slidingContainer .last-marker{
+    display:block;
+    position: absolute;
+    left: 3px;
+    bottom: 0px;
+    width: 4px;
+    height: 4px;
+    border: 2px solid rgb(179, 187, 209);
+    background-color: rgb(179, 187, 209);
+    border-radius: 18px;
+    z-index: 11;
+    box-sizing: content-box !important;
+    opacity:0;
+    transition: 0.5s ease;
+}
+
+#slidingContainer .last-marker.show{
+  opacity:1;
+  
+}
+
+  #slidingContainer h2,#slidingContainer h3,#slidingContainer p {
+    color:inherit !important;
+  }
+
+#slidingContainer .slider-item {
+    margin-left: 20px;
+}
+
+#slidingContainer .slider-item{
+    transition: opacity 0.5s ease;
+    opacity: 0;
+}
+#slidingContainer .slider-item:not(.first-slider-item){
+    padding:30px 0;
+}
+
+#slidingContainer .slider-item.first-slider-item{
+    padding-bottom: 30px;
+}
+
+#slidingContainer .slider-item.show{
+    opacity: 1;
+}
+
+#slidingContainer .item-heading{
+    font-family: "LL Circular", sans-serif;
+    letter-spacing: -0.2px;
+    font-weight: 500;
+}
+
+#slidingContainer h2.section-heading{
+  margin-top:0;
+  font-weight:bold;
+}
+
+#slidingContainer .item-text{
+    font-size: 15px;
+    line-height: 1.5;
+    font-weight: normal;
+    margin: 0px;
+}
+
+#slidingContainer .item-container{
+    transform: translateY(-8px);
+}
+
+#slidingContainer .sliding-container{
+    position: relative;
+}
+
+@media (max-width:625px){
+#slidingContainer .container{
+flex-direction:column;
+}
+
+#slidingContainer .appearingTextContainer{
+padding-left: 0;
+max-width: 92vw;
+margin: auto;
+}
+#slidingContainer .pinnedImage img{
+max-width:unset;
+width: 92vw !important;
+margin-bottom: 25px;
+}
+#slidingContainer .appearingTextContainer, #slidingContainer .pinnedImage{
+width:100%;
+}
+
+}
+
+/***********************TEXT SLIDER END*************************/
+
+
+/***********************Ingredients Section**********************/
+.rectangular-ingredient-section > *{
+box-sizing:border-box;
+}
+.rectangular-ingredient-section .container{
+    margin:auto;
+}
+.rectangular-ingredient-section{
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin: 120px auto;
+}
+
+.rectangular-ingredient-section .header-container{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    margin: 0 auto 56px auto;
+    padding-right: 15px;
+    padding-left: 15px; 
+    text-align: center;
+}
+.rectangular-ingredient-section .header-container h2{
+    font-weight:700;
+    color:inherit;
+    margin: 0px 0px 24px;
+}
+
+.rectangular-ingredient-section .header-container p{
+    font-weight: normal;
+    text-align: center;
+    color: inherit;
+    margin: 0px;
+}
+
+.rectangular-ingredient-section .ingredients-grid{
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -15px;
+    margin-right: -15px;
+}
+
+.rectangular-ingredient-section .ingredients-grid .ingredient-card{
+    flex: 0 0 33.3333333333%;
+    max-width: 33.3333333333%;
+    padding-right: 12px;
+    padding-left: 12px;
+    min-height: 240px;
+    margin-bottom: 24px;
+
+}
+
+.rectangular-ingredient-section .ingredient-card .card-container{
+    appearance: none;
+    border: 0px;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    background: linear-gradient(161deg,#feb8f62e,#aed8e863);
+    height: 100%;
+    position: relative;
+    padding: 15px;
+    z-index: 1;
+    overflow: hidden;
+    box-shadow: 0px 2px 8px 0px rgb(0 0 0 / 15%);
+}
+
+.ingredient-card .ingredient-card-heading{
+    margin: 0;
+    color: inherit;
+    filter: drop-shadow(0px -4px 1px rgba(0,0,0,0.15));
+}
+
+.ingredient-card .ingredient-card-subheading{
+    margin-top:0;
+    margin-bottom: 5px;
+    color: inherit;
+    font-size: 20px;
+    line-height:1.2;
+}
+
+.rectangular-ingredient-section .card-container{
+    position: relative;
+}
+
+.card-background-img-wrapper .img-wrapper{
+    position: absolute;
+    width: auto;
+    height: 100%;
+    top: 0;
+    right: 0;
+    z-index: -1;
+}
+
+ .calciumCard .card-background-img-wrapper .img-wrapper{
+     transform: rotate(30deg);
+     top: 6px;
+     right: -40px;
+ }
+.magnesiumCard .card-background-img-wrapper .img-wrapper{
+        top: 40px;
+        right: -40px;
+   }
+.sodiumCard .card-background-img-wrapper .img-wrapper{
+        top: 60px;
+        right: -40px;
+   }
+
+   .potassiumCard .card-background-img-wrapper .img-wrapper{
+        top: 60px;
+        right: -100px;
+   }
+
+   .phosphorousCard .card-background-img-wrapper .img-wrapper{
+        top: 63px;
+        right: -87px;
+   }
+
+   .chlorideCard .card-background-img-wrapper .img-wrapper{
+        top: 60px;
+        right: -40px;
+   }
+
+
+.periodic-element{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: fit-content;
+    height: auto;
+    padding: 3px 9px;
+    color: inherit;
+    font-weight: bold;
+    font-family: sans-serif; 
+    position: absolute;
+    bottom: 10px;
+    left: 15px;
+}
+
+.periodic-element .atomic-number,
+.periodic-element .element-molar-mass{
+    font-size: 10px;
+    line-height: 0.8;
+}
+
+.element-initials{
+    font-size: 21px;
+}
+
+
+
+
+@media (min-width: 1200px){
+    .container{
+        max-width: 1170px;
+    }
+}
+@media (max-width: 1200px){
+    .rectangular-ingredient-section .ingredients-grid .ingredient-card{
+        min-height: 200px;
+    }
+    
+    
+
+}
+
+@media (max-width: 910px){
+    .rectangular-ingredient-section .ingredients-grid .ingredient-card{
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+
+@media (max-width: 675px){
+    .rectangular-ingredient-section .ingredients-grid .ingredient-card{
+        flex: 0 0 100%;
+        min-height: 210px;
+        max-width: 100%;
+        max-width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (max-width: 500px){
+    .rectangular-ingredient-section .ingredients-grid .ingredient-card{
+        max-width: 100%;
+
+    }
+}
+/**********************Ingredients Section End*******************/
+
+
+
+.header-wrapper{
+ background: transparent;
+position: absolute;
+width:100%;
+}
+:root{
+--container-gutter: 24px;
+}
+
+.text-with-icons {
+display: block;
+}
+
+.text-with-icons__list {
+display: flex;
+scroll-snap-type: x mandatory;
+margin-left: calc(-1 * var(--container-gutter));
+margin-right: calc(-1 * var(--container-gutter));
+}
+
+.text-with-icons__item {
+display: block;
+text-align: center;
+padding: 0 48px;
+width: 100%;
+flex: none;
+scroll-snap-align: center;
+scroll-snap-stop: always;
+}
+
+.text-with-icons__icon-wrapper {
+margin-bottom: 16px;
+}
+
+.text-with-icons__custom-icon {
+display: block;
+max-width: 24px;
+}
+
+.text-with-icons__icon-wrapper > * {
+margin: 0 auto;
+}
+
+.text-with-icons__dots {
+margin-top: 26px;
+}
+
+@media screen and (min-width: 1000px) {
+.text-with-icons__list {
+display: grid;
+grid-gap: 48px;
+gap: 48px;
+grid-auto-flow: column;
+grid-auto-columns: minmax(200px, 400px);
+justify-content: center;
+margin-left: 0;
+margin-right: 0;
+}
+
+.text-with-icons__item {
+padding: 0; /* Spacing is already added by the grid */
+}
+
+.text-with-icons__content-wrapper .heading + p {
+margin-top: 16px; /* We have a slightly different spacing here */
+}
+}
+
+
+/*********************Custom Blog Posts******************************/
+.blog-posts-section > *{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+} 
+
+.blog-posts-section .container{
+    margin:auto;
+}
+
+.blog-posts-section {
+    margin: 60px auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+
+
+
+.blog-posts-section .header-container{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    margin: 0 auto 56px auto;
+    padding-right: 15px;
+    padding-left: 15px; 
+    text-align: center;
+}
+
+
+.blog-posts-section .header-container p{
+    line-height: 1.75rem;
+    font-weight: normal;
+    text-align: center;
+    color: rgb(20, 43, 111);
+    margin: 0px;
+}
+
+
+
+.blog-posts-section .blog-posts-container{
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 50vw;
+    gap: 10px;
+}
+
+
+.blog-posts-section .blog-posts-container .blog-card{
+    flex: 0 0 50%;
+    max-width: 49%;
+    padding-right: 12px;
+    padding-left: 12px;
+    min-height: 341px;
+    margin-bottom: 24px;
+    overflow: hidden;
+    position: relative;
+    text-decoration: none;
+    padding: 40px 30px;
+    display: flex;
+    box-sizing: border-box;
+    position:relative;
+}
+.blog-posts-container .blog-card:before {
+  content: '';
+  background: linear-gradient(1deg, rgb(0 0 0 / 18%), transparent);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  z-index: 1;
+}
+
+
+.blog-posts-section.slideshow-container .blog-posts-container .blog-card{
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+
+.blog-posts-section.slideshow-container .blog-posts-container{
+  justify-content: center;
+}
+
+.blog-card .blog-article-background {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 0;
+    transition: 0.75s ease;
+}
+
+.blog-card:hover .blog-article-background{
+    transform: scale(1.05);
+}
+
+.blog-card .card-text{
+    color:rgb(20, 43, 111);
+    align-self: flex-end;
+  z-index:1;
+}
+
+.blog-card .card-text .article-read-time{
+    display: block;
+    font-size: 12px;
+    line-height: 0.8;
+    font-weight: 500;
+    margin: 10px 0;
+}
+
+.blog-card .card-text .article-title{
+    font-size: 20px;
+    line-height: 1.1;
+    font-weight: bold;
+    text-align: left;
+    letter-spacing: -0.2px;
+    color:inherit;
+}
+
+.all-articles{
+    color: rgb(20, 43, 111);
+    text-decoration: none;
+    display: block;
+    margin: auto;
+    border-radius: 25px;
+    border: 1px solid rgb(20, 43, 111);
+    padding: 10px 15px;
+    font-family: sans-serif;
+    width: fit-content;
+    transition: 0.5s ease;
+}
+
+.all-articles:hover{
+    background: rgb(255, 214, 0);
+    border-color: rgb(255, 214, 0);
+}
+
+/* Slideshow container */
+.blog-posts-section.slideshow-container {
+max-width: 1000px;
+position: relative;
+margin: auto;
+}
+
+/* Hide the images by default */
+.blog-posts-section .mySlides {
+display: none;
+}
+
+/* Next & previous buttons */
+.blog-posts-section .prev, .blog-posts-section .next {
+cursor: pointer;
+position: absolute;
+top: 50%;
+width: auto;
+margin-top: -22px;
+padding: 16px;
+color: rgb(0, 0, 0);
+font-weight: bold;
+font-size: 18px;
+transition: 0.6s ease;
+border-radius: 0 3px 3px 0;
+user-select: none;
+}
+
+/* Position the "next button" to the right */
+.blog-posts-section .next {
+right: 0;
+border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.blog-posts-section .prev:hover, .blog-posts-section .next:hover {
+background-color: rgba(0,0,0,0.8);
+color: #fff;
+}
+
+/* Caption text */
+.blog-posts-section .text {
+color: #f2f2f2;
+font-size: 15px;
+padding: 8px 12px;
+position: absolute;
+bottom: 8px;
+width: 100%;
+text-align: center;
+}
+
+/* Number text (1/3 etc) */
+.blog-posts-section .numbertext {
+color: #f2f2f2;
+font-size: 12px;
+padding: 8px 12px;
+position: absolute;
+top: 0;
+}
+
+/* The dots/bullets/indicators */
+.blog-posts-section .dot {
+cursor: pointer;
+height: 15px;
+width: 15px;
+margin: 0 2px;
+background-color: #bbb;
+border-radius: 50%;
+display: inline-block;
+transition: background-color 0.6s ease;
+}
+
+.blog-posts-section .active, .blog-posts-section .dot:hover {
+background-color: #717171;
+}
+
+/* Fading animation */
+.blog-posts-section .fade {
+animation-name: fade;
+animation-duration: 1.5s;
+}
+
+@keyframes fade {
+from {
+opacity: .4
+}
+to {
+opacity: 1
+}
+}
+
+@media (min-width:625px){
+.blog-posts-section.slideshow-container{
+display: none;
+}
+.blog-posts-section:not(.slideshow-container){
+display: block;
+}
+}
+
+@media (max-width:625px){
+.blog-posts-section.slideshow-container{
+display: block;
+}
+.blog-posts-section:not(.slideshow-container) .blog-posts-container{
+display: none;
+}
+}
+/*********************Custom Blog Posts End************************/
+
+
+/*******************News Site Section*****************************/
+.news-publication > *{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+} 
+
+.news-publication .container{
+    margin:auto;
+    max-width: 1140px;
+}
+
+.news-publication {
+    margin: 60px auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+
+.news-publication .news-publication-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    position: relative;
+    width: fit-content;
+}
+
+.news-publication .news-publication-links:before{
+    content: '';
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    height: 4px;
+}
+
+.news-publication .news-link-container:not(:last-child) .news-link{
+    display: block;
+    margin-right: 20px;
+}
+
+.news-link-logo{
+    transition: 0.5s ease;
+}
+
+.news-publication .news-link-container .news-link:hover .news-link-logo{
+    opacity: 0.56;
+}
+
+@media (max-width:1024px){
+    .news-link-logo{
+        width: 150px;
+    }
+}
+
+@media (max-width:725px){
+    .news-publication .news-publication-links{
+        flex-direction: column;
+        width: auto;
+    }
+
+    .news-link-logo{
+        width: 200px;
+    }
+}
+
+/********************************News Site End*************************************/
