@@ -1,0 +1,126 @@
+
+<style>
+    .{{section.id}} .news-publication-links:before{
+        background-color: {{section.settings.lineColor}};
+    }
+    .{{section.id}} .news-link-logo{
+      width: {{ section.settings.logoWidth }}px;
+    }
+  </style>
+  
+  <section id="news-publications" class="{{ section.id }} news-publication color-{{ section.settings.color_scheme }}  gradient">
+    <div class="container">
+      <div class="news-publication-links">
+          {% for block in section.blocks %}
+              <div class="news-link-container">
+                  <a href="{{block.settings.newsLink}}" class="news-link" target="_blank">
+                    <img src="{{ block.settings.image | img_url:'200x200'  }}" alt="{{ block.settings.image.alt | escape  }}" class="news-link-logo">
+                  </a>
+              </div>
+          {% endfor %}
+      </div>
+    </div>
+  </section>
+  
+  {% schema %}
+      {
+        "name": "News Publication Sites",
+        "settings": [
+        {
+          "type":"text",
+          "id": "subheading",
+          "default": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+          "label": "Subheading"
+        },
+        {
+          "type": "select",
+          "id": "color_scheme",
+          "options": [
+            {
+              "value": "accent-1",
+              "label": "t:sections.all.colors.accent_1.label"
+            },
+            {
+              "value": "accent-2",
+              "label": "t:sections.all.colors.accent_2.label"
+            },
+            {
+              "value": "background-1",
+              "label": "t:sections.all.colors.background_1.label"
+            },
+            {
+              "value": "background-2",
+              "label": "t:sections.all.colors.background_2.label"
+            },
+            {
+              "value": "inverse",
+              "label": "t:sections.all.colors.inverse.label"
+            }
+            ],
+            "default": "background-1",
+            "label": "t:sections.all.colors.label",
+            "info": "t:sections.all.colors.has_cards_info"
+          },
+          {
+            "type": "color",
+            "id": "lineColor",
+            "label": "Line color",
+            "default": "#142b6f"
+          },    
+          {
+            "type": "range",
+            "id": "logoWidth",
+            "min": 150,
+            "max": 300,
+            "step": 5,
+            "default": 200,
+            "label": "Logo Width"
+          }
+        ],
+        "blocks": [
+        {
+          "type": "heading",
+          "name": "Publication Site logo",
+          "limit": 5,
+          "settings": [
+            {
+              "type": "url",
+              "id": "newsLink",
+              "label": "Publication Link"
+            },
+            {
+              "type": "image_picker",
+              "id": "image",
+              "label": "News Site Logo (Transparent Background)"
+            }
+          ]
+        }
+      ],
+      "presets": [
+      {
+      "name": "News Publication Sites",
+      "blocks": [
+        {
+          "type": "heading"
+        },
+       {
+          "type": "heading"
+        },
+        {
+          "type": "heading"
+        },
+        {
+          "type": "heading"
+        }
+  
+      ]
+      }
+      ]
+      }
+  {% endschema %}
+  
+  {% stylesheet %}
+  {% endstylesheet %}
+  
+  {% javascript %}
+  {% endjavascript %}
