@@ -1,0 +1,218 @@
+{% style %}
+    .{{section.id}} {
+        color: {{section.settings.textColor}};
+    }
+{% endstyle %}
+  
+  <section id="imageAndTextSlider" class='{{ section.id }} color-{{ section.settings.color_scheme }}  gradient no-heading'>
+      <div class="container page-width">
+        <div class="pinnedImages">
+            {% for block in section.blocks %}
+                {% if block.settings.image %}
+                    {% assign imageWidth = block.settings.imageWidth | append: 'x' %}
+                    <img data-slider-index='{{ forloop.index }}' class='{% if forloop.first %}show{% endif %}' src="{{ block.settings.image | img_url:imageWidth  }}" alt="{{ block.settings.image.alt | escape  }}" style='width:{{ block.settings.imageWidth }}px'>
+                {% endif %}
+            {% endfor %}
+        </div>
+            <div class='slider-text-items-container'>
+              {% for block in section.blocks %}
+                  <div class='slider-item' data-slider-index='{{ forloop.index }}'>
+                      <div class='mobile-img-container'>
+                          <img src="{{ block.settings.image | img_url:imageWidth  }}" alt="{{ block.settings.image.alt | escape  }}">
+                      </div>
+                      <div class='text-container'>
+                          <div class='text-heading'>
+                              <h3 class="item-heading {{ block.settings.heading_size }}">{{block.settings.heading}}</h3>
+                          </div>
+                          <div class='text-paragraph'>
+                              <p class="item-text">{{ block.settings.paragraph }}</p>
+                          </div>
+                      </div>
+                  </div>
+              {% endfor %}
+            </div>  
+      </div>
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/ScrollTrigger.min.js"></script>
+  
+  <script>
+gsap.registerPlugin(ScrollTrigger);
+
+    ScrollTrigger.matchMedia({	
+	// desktop
+	"(min-width: 750px)": function() {
+		// setup animations and ScrollTriggers for screens over 800px wide (desktop) here...
+		// ScrollTriggers will be reverted/killed when the media query doesn't match anymore.
+    let tl = gsap.timeline({
+    scrollTrigger: {
+        trigger: ".{{ section.id }} .container",
+        start: "top 25%",
+        pin: '.{{ section.id }} .pinnedImages',
+        end: "bottom bottom",
+        scrub: true
+    }
+    });
+    
+    document.querySelectorAll('.{{ section.id }} .slider-text-items-container .slider-item').forEach(item => {
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: item.querySelector('.text-container'),
+          start: 'top 50%',
+          end: 'bottom 50%',
+          onEnter: ()=> {
+         document.querySelectorAll('.{{ section.id }} .pinnedImages img').forEach(img=>{
+           if(img.getAttribute('data-slider-index') === item.getAttribute('data-slider-index')){
+             img.style.display = 'block';
+           }else{
+             img.style.display = 'none';
+             
+           }
+         })
+          },
+          onEnterBack: ()=> {
+         document.querySelectorAll('.{{ section.id }} .pinnedImages img').forEach(img=>{
+           if(img.getAttribute('data-slider-index') === item.getAttribute('data-slider-index')){
+             img.style.display = 'block';
+           }else{
+             img.style.display = 'none';
+             
+           }
+         })
+          }
+        }
+      });
+    })
+
+    
+    
+  }, 
+  
+	// mobile
+	"(max-width: 750px)": function() {
+		
+  }, 
+  
+	// all 
+	"all": function() {
+
+	}
+  
+});
+  </script>
+{% schema %}
+  {
+    "name": "Images and Text Slider",
+    "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        {
+          "value": "accent-1",
+          "label": "t:sections.all.colors.accent_1.label"
+        },
+        {
+          "value": "accent-2",
+          "label": "t:sections.all.colors.accent_2.label"
+        },
+        {
+          "value": "background-1",
+          "label": "t:sections.all.colors.background_1.label"
+        },
+        {
+          "value": "background-2",
+          "label": "t:sections.all.colors.background_2.label"
+        },
+        {
+          "value": "inverse",
+          "label": "t:sections.all.colors.inverse.label"
+        }
+        ],
+        "default": "background-1",
+        "label": "t:sections.all.colors.label",
+        "info": "t:sections.all.colors.has_cards_info"
+      },
+      {
+        "type":"color",
+        "id": "textColor",
+        "default": "#142b6f",
+        "label": "Text Color"
+      }
+    ],
+    "blocks": [
+    {
+      "type": "heading",
+      "name": "Text With Images",
+      "limit": 5,
+      "settings": [
+        {
+      "type":"text",
+      "id": "heading",
+      "default": "For skeptics, by skeptics.",
+      "label": "Heading"
+    },
+    {
+      "type":"text",
+      "id": "paragraph",
+      "default": "We’re not about pseudoscience and half-truths. Health fads make our eyes roll. So, when we set out to develop Essential for Women, we wanted something simple, clean, and backed by science. We challenged some of the top scientists to reimagine the daily multivitamin for women. The result is everything we think a multivitamin should be.",
+      "label": "Subheading"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_size.options__1.label"
+        },
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_size.options__2.label"
+        },
+        {
+          "value": "h0",
+          "label": "t:sections.all.heading_size.options__3.label"
+        }
+      ],
+      "default": "h1",
+      "label": "t:sections.all.heading_size.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Pinned Image"
+    },
+    {
+      "type": "range",
+      "id": "imageWidth",
+      "min": 400,
+      "max": 800,
+      "step": 10,
+      "default": 500,
+      "label": "Image Width"
+    }
+      ]
+    }
+  ],
+  "presets": [
+  {
+  "name": "Images and Text Slider",
+  "blocks": [
+    {
+      "type": "heading",
+      "type": "heading",
+      "type": "heading"
+    }
+  ]
+  }
+  ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

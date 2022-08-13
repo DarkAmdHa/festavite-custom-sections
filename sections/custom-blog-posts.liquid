@@ -1,0 +1,287 @@
+{% style %}
+    .{{section.id}} {
+        color: {{section.settings.textColor}};
+    }
+
+     .{{section.id}} .blog-posts-section .dot.active{
+        background-color: {{section.settings.sliderDotActiveColor}};
+    }
+{% endstyle %}
+
+
+
+<section id="custom-blog-posts-section" class="{{section.id}} color-{{ section.settings.color_scheme }}  gradient{% if section.settings.heading == blank %} no-heading{% endif %}">   
+  <div class="blog-posts-section">
+      <div class="container">
+         <div class="header-container">
+            <h2 class="section-heading {{ section.settings.heading_size }}">{{ section.settings.heading }}</h2>
+            <p class="section-text">{{ section.settings.subheading }}</p>
+         </div>
+         <div class="blog-posts-container">
+         {%- for block in section.blocks -%}
+           <style>
+              .blog-posts-section:not(.slideshow-container) .slider-block-{{ forloop.index }},
+             .blog-posts-section.slideshow-container .slider-block-{{ forloop.index }} .card-text{
+                color: {{ block.settings.textColor }}
+              }
+            </style>
+            <a href="{{block.settings.articleLink}}" class="blog-card">
+               <img class='blog-article-background' src="{{ block.settings.image | img_url:'500x500'  }}" alt="{{ block.settings.image.alt | escape  }}">
+               <div class="card-text slider-block-{{ forloop.index }}">
+                  <p class="article-read-time">{{ block.settings.readTime }}</p>
+                  <h3 class="article-title">{{ block.settings.articleTitle }}</h3>
+               </div>
+            </a>
+         {%- endfor -%}
+           {% if section.settings.button and section.settings.buttonLink != blank %}
+         <div class='all-articles-container'>
+            <a href="{{ section.settings.buttonLink }}" class="all-articles">{{ section.settings.buttonText }}</a>
+         </div>
+           {% endif %}
+         </div>
+      </div>
+   </div>
+   
+   <!-- Slideshow container -->
+   <div class="blog-posts-section slideshow-container">
+      <div class="blog-posts-container">
+         <!-- Full-width images with number and caption text -->
+          {%- for block in section.blocks -%}
+             <div class="mySlides fade slider-block-{{ forloop.index }}">
+                <a href="{{block.settings.articleLink}}" class="blog-card">
+                    <div style='display:block;margin-top:95%;'></div>
+                   <img class='blog-article-background' src="{{ block.settings.image | img_url:'900x900'  }}" alt="{{ block.settings.image.alt | escape  }}">
+                   <div class="card-text">
+                      <p class="article-read-time">{{ block.settings.readTime }}</p>
+                      <h3 class="article-title">{{ block.settings.articleTitle }}</h3>
+                   </div>
+                </a>
+             </div>
+           {%- endfor -%}
+           <!-- Next and previous buttons -->
+          <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+          <a class="next" onclick="plusSlides(1)">&#10095;</a>
+      </div>
+
+      <!-- The dots/circles -->
+      <div style="text-align:center">
+          {%- for block in section.blocks -%}
+             <span class="dot" onclick="currentSlide({{ forloop.index }})"></span>
+          {% endfor %}
+      </div>
+     {% if section.settings.button and section.settings.buttonLink != blank %}
+       <div class='all-articles-container'>
+        <a href="{{ section.settings.buttonLink }}" class="all-articles">{{ section.settings.buttonText }}</a>
+       </div>
+     {% endif %}
+   </div>
+   
+   <script>
+      let slideIndex = 1;
+      let parentElement = document.currentScript.parentElement;
+      
+      showSlides(slideIndex);
+      
+      // Next/previous controls
+      function plusSlides(n) {
+        showSlides(slideIndex += n);
+      }
+      
+      // Thumbnail image controls
+      function currentSlide(n) {
+        showSlides(slideIndex = n);
+      }
+      
+      
+      function showSlides(n) {
+      let i;
+      let slides = parentElement.getElementsByClassName("mySlides");
+      let dots = parentElement.getElementsByClassName("dot");
+      if (n > slides.length) {slideIndex = 1}
+      if (n < 1) {slideIndex = slides.length}
+      for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+      }
+      for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active", "");
+      }
+      slides[slideIndex-1].style.display = "block";
+      dots[slideIndex-1].className += " active";
+      }
+   </script>
+</section>
+
+{% schema %}
+    {
+      "name": "Custom Blog Posts",
+      "settings": [
+      {
+        "type":"text",
+        "id": "heading",
+        "default": "Lorem Ipsum",
+        "label": "Heading"
+      },
+      {
+        "type":"text",
+        "id": "subheading",
+        "default": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        "label": "Subheading"
+      },
+      {
+        "type": "select",
+        "id": "heading_size",
+        "options": [
+          {
+            "value": "h2",
+            "label": "t:sections.all.heading_size.options__1.label"
+          },
+          {
+            "value": "h1",
+            "label": "t:sections.all.heading_size.options__2.label"
+          },
+          {
+            "value": "h0",
+            "label": "t:sections.all.heading_size.options__3.label"
+          }
+        ],
+        "default": "h1",
+        "label": "t:sections.all.heading_size.label"
+      },
+      {
+        "type": "select",
+        "id": "color_scheme",
+        "options": [
+          {
+            "value": "accent-1",
+            "label": "t:sections.all.colors.accent_1.label"
+          },
+          {
+            "value": "accent-2",
+            "label": "t:sections.all.colors.accent_2.label"
+          },
+          {
+            "value": "background-1",
+            "label": "t:sections.all.colors.background_1.label"
+          },
+          {
+            "value": "background-2",
+            "label": "t:sections.all.colors.background_2.label"
+          },
+          {
+            "value": "inverse",
+            "label": "t:sections.all.colors.inverse.label"
+          }
+          ],
+          "default": "background-1",
+          "label": "t:sections.all.colors.label",
+          "info": "t:sections.all.colors.has_cards_info"
+        },
+                  {
+            "type": "checkbox",
+            "id": "button",
+            "default": true,
+            "label": "See All Articles link?"
+          },
+          {
+            "type": "url",
+            "id": "buttonLink",
+            "label": "Button Link"
+          },
+          {
+            "type": "text",
+            "id": "buttonText",
+            "default": "See All Articles",
+            "label": "Button Text"
+          },
+          {
+            "type":"color",
+            "id": "textColor",
+            "default": "#333",
+            "label": "Text Color"
+          },
+          {
+            "type":"color",
+            "id": "sliderDotActiveColor",
+            "default": "#142b6f",
+            "label": "Active Slider Dot Color (Mobile)"
+          }
+      ],
+      "blocks": [
+      {
+        "type": "heading",
+        "name": "Article",
+        "limit": 5,
+        "settings": [
+          {
+            "type": "text",
+            "id": "articleTitle",
+            "default": "3 Reasons Why This Is A Great Product",
+            "label": "Article Title"
+          },
+          {
+            "type": "select",
+            "id": "heading_size",
+            "options": [
+              {
+                "value": "h2",
+                "label": "t:sections.all.heading_size.options__1.label"
+              },
+              {
+                "value": "h1",
+                "label": "t:sections.all.heading_size.options__2.label"
+              },
+              {
+                "value": "h0",
+                "label": "t:sections.all.heading_size.options__3.label"
+              }
+            ],
+            "default": "h1",
+            "label": "Element Name Size"
+          },
+          {
+            "type": "text",
+            "id": "readTime",
+            "default": "3 min read",
+            "label": "Read Time"
+          },
+          {
+            "type":"color",
+            "id": "textColor",
+            "default": "#333",
+            "label": "Card Text Color"
+          },
+          {
+            "type": "url",
+            "id": "articleLink",
+            "label": "Article Link"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Article Image"
+          }
+        ]
+      }
+    ],
+    "presets": [
+    {
+    "name": "Custom Blog Posts",
+    "blocks": [
+      {
+        "type": "heading"
+      },
+     {
+        "type": "heading"
+      }
+
+    ]
+    }
+    ]
+    }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,125 @@
+
+<style>
+    .{{ section.id }}.testimonial-carousel{
+      background: {{section.settings.backgroundColor}};
+    }
+  </style>
+  
+      <section id='policy-container' class="{{ section.id }} testimonial-carousel color-{{ section.settings.color_scheme }}  gradient">
+          <div class="page-width">
+              <div class='policy-title-container'>
+                <h2 class="policy-container-title title h1">{{  section.settings.heading  }}</h2>
+                <img src="{{ section.settings.image | image_url: '50x50' }}">
+              </div>
+              <hr class='policy-divider'>
+              <div class='policies-container'>
+                <div class='policies-navigator'>
+                  {% for block in section.blocks %}
+                    <a href='{{ block.settings.policyLink }}' class='policyLink {% if block.settings.isActive %}is-active{% endif %}'>{{ block.settings.policyName }}</a>
+                  {% endfor %}
+                </div>
+                <div class='main-current-policy'>
+                  {{ page.content }}
+                </div>
+              </div>
+          </div>
+      </section>
+      
+  {% schema %}
+      {
+      "name": "Policy Section",
+        "settings": [
+          {
+            "type":"text",
+            "id": "heading",
+            "default": "Our Policies",
+            "label": "Heading"
+          },
+          {
+              "type": "image_picker",
+              "id": "image",
+              "label": "Icon"
+          },
+          {
+            "type": "color",
+            "id": "backgroundColor",
+            "default": "#f9f9f9",
+            "label": "Background Color"
+          },
+          {
+            "type": "select",
+            "id": "color_scheme",
+            "options": [
+              {
+                "value": "accent-1",
+                "label": "t:sections.all.colors.accent_1.label"
+              },
+              {
+                "value": "accent-2",
+                "label": "t:sections.all.colors.accent_2.label"
+              },
+              {
+                "value": "background-1",
+                "label": "t:sections.all.colors.background_1.label"
+              },
+              {
+                "value": "background-2",
+                "label": "t:sections.all.colors.background_2.label"
+              },
+              {
+                "value": "inverse",
+                "label": "t:sections.all.colors.inverse.label"
+              }
+              ],
+              "default": "background-1",
+              "label": "t:sections.all.colors.label",
+              "info": "t:sections.all.colors.has_cards_info"
+          }
+        ],
+        "blocks": [
+        {
+          "type": "heading",
+          "name": "Policies",
+          "limit": 20,
+          "settings": [
+            {
+              "type": "url",
+              "id": "policyLink",
+              "label": "Policy"
+            },
+            {
+              "type": "checkbox",
+              "id": "isActive",
+              "label": "isActive",
+              "default":false
+            },
+            {
+              "type": "text",
+              "id": "policyName",
+              "label": "Policy Name",
+              "default": "Refund Policy"
+            }
+          ]
+        }
+      ],
+      "presets": [
+      {
+      "name": "Policy Section",
+      "blocks": [
+        {
+          "type": "heading"
+        },
+        {
+          "type": "heading"
+        }
+      ]
+      }
+      ]
+      }
+  {% endschema %}
+  
+  {% stylesheet %}
+  {% endstylesheet %}
+  
+  {% javascript %}
+  {% endjavascript %}

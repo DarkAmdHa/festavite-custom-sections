@@ -1,0 +1,236 @@
+
+<style>
+    .{{ section.id }}.testimonial-carousel{
+      background: {{section.settings.backgroundColor}};
+            padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    }
+  
+      @media screen and (min-width: 750px) {
+        .{{ section.id }}.testimonial-carousel {
+          padding-top: {{ section.settings.padding_top }}px;
+          padding-bottom: {{ section.settings.padding_bottom }}px;
+        }
+      }
+  </style>
+  
+      <section id='testimonial-carousel' class="{{ section.id }} testimonial-carousel color-{{ section.settings.color_scheme }}  gradient">
+          <div class="page-width">
+              <h2 class="testimonial-heading title h1">{{  section.settings.heading  }}</h2>
+              <p class="subheading">{{  section.settings.subheading  }}</p>
+            
+              <div class="testimonial-slider-container">
+                <div class="testimonial-carousel-container">
+                  {% for block in section.blocks %}
+                      <div class="testimonial-carousel-slides testimonial-carousel-slides-slide-{{ forloop.index }}">
+                        <div class="testimonial-carousel-image-wrapper">
+                            <img src="{{ block.settings.image | img_url:'200x200'  }}" alt="{{ block.settings.image.alt | escape  }}">
+                        </div>
+      
+                        <div class="testimonial-text">
+                            <h3 class="testimonial-author">{{ block.settings.personName }}</h3>
+                            <p class="testimonial">{{ block.settings.personOccupation }}</p>
+                        </div>
+                      </div>
+                  {% endfor %}
+              </div>
+            </div>
+              <div class="slides-control-btn">
+                <div class="left-arrow faded"><svg width="11" height="18" version="1.1" viewBox="0 0 11 18"><g fill="none" fill-rule="evenodd" stroke="none" stroke-width="1"><g stroke="#142B6F" stroke-width="2"><g><g><g transform="translate(-233.000000, -1724.000000) translate(135.000000, 1603.000000) translate(0.000000, 118.000000) translate(104.000000, 12.000000) scale(-1, 1) translate(-104.000000, -12.000000) translate(100.000000, 4.000000)"><polyline points="0 0 8 8 0 16"></polyline></g></g></g></g></g></svg></div>
+                <div class="right-arrow"><svg width="11" height="18" version="1.1" viewBox="0 0 11 18"><g fill="none" fill-rule="evenodd" stroke="none" stroke-width="1"><g stroke="#142B6F" stroke-width="2"><g><g><g transform="translate(-272.000000, -1724.000000) translate(135.000000, 1603.000000) translate(0.000000, 118.000000) translate(138.000000, 4.000000)"><polyline points="0 0 8 8 0 16"></polyline></g></g></g></g></g></svg></div>
+              </div>
+          </div>
+      </section>
+
+      <script>
+        (function(){
+          let slidesContainer = document.querySelector('.{{section.id}} .testimonial-carousel-container')
+          let slides = document.querySelectorAll('.{{section.id}} .testimonial-carousel-slides')
+          let slidesContollerBtn = document.querySelector('.{{section.id}} .slides-control-btn')
+          let leftArrow = slidesContollerBtn.querySelector('.left-arrow'),
+              rightArrow = slidesContollerBtn.querySelector('.right-arrow')
+          let screenCheck = window.matchMedia('(max-width: 750px)')
+          slidesContainer.style.left = '0%'
+          if(screenCheck.matches && slides.length > 1){
+            slidesContollerBtn.classList.add('display')
+          } else if (!screenCheck.matches && slides.length > 3){
+              slidesContollerBtn.classList.add('display')
+          } 
+
+          let slideSize = screenCheck.matches ? 100 : 33.33
+          slidesContainer.style.width = slides.length * slideSize + '%'
+          const moveRight = (moveBy) => {
+            slidesContainer.style.left = (+slidesContainer.style.left.split('%')[0] - moveBy)  + '%'
+          }
+
+          const moveLeft = (moveBy) => {
+            slidesContainer.style.left = (+slidesContainer.style.left.split('%')[0] + moveBy)  + '%'
+          }
+
+          const handleLeftIconState = () => {
+              leftArrow.classList.remove('faded')
+              if(Math.ceil(+slidesContainer.style.width.split('%')[0] + +slidesContainer.style.left.split('%')[0]) == 100)
+                rightArrow.classList.add('faded')
+          }
+
+          const handleRightIconState = () => {
+              rightArrow.classList.remove('faded')
+              if(+slidesContainer.style.left.split('%')[0] >= 0)
+                leftArrow.classList.add('faded')
+          }
+
+          leftArrow.addEventListener('click', e=>{
+            if(+slidesContainer.style.left.split('%')[0] < 0){
+              screenCheck.matches ? moveLeft(100) : moveLeft(33.33)
+              handleRightIconState()
+              }
+          })
+
+          rightArrow.addEventListener('click', e=>{
+            if(Math.ceil(+slidesContainer.style.width.split('%')[0] + +slidesContainer.style.left.split('%')[0]) != 100){
+              screenCheck.matches ? moveRight(100) : moveRight(33.33)
+              handleLeftIconState()
+            }
+          })
+          
+
+          screenCheck.addEventListener('change', e =>{
+            slideSize = screenCheck.matches ? 100 : 33.33
+            slidesContainer.style.width = slides.length * slideSize + '%'
+            slidesContainer.style.left = '0%'
+            handleRightIconState()
+            if(screenCheck.matches && slides.length > 1){
+            slidesContollerBtn.classList.add('display')
+            } else if (!screenCheck.matches && slides.length > 3){
+              slidesContollerBtn.classList.add('display')
+            }else{
+              slidesContollerBtn.classList.remove('display')
+            }
+          })
+
+          
+        })();
+      </script>
+      
+  {% schema %}
+      {
+        "name": "Cards Slider",
+        "settings": [
+          {
+            "type":"text",
+            "id": "heading",
+            "default": "Scientific Advisory Board",
+            "label": "Heading"
+          },
+          {
+            "type":"text",
+            "id": "subheading",
+            "default": "Our scientific advisory board, comprised of medical doctors, nutritionists and scientists, helps guide our thinking around the latest research and product innovation.",
+            "label": "Subheading"
+          },
+          {
+            "type": "color",
+            "id": "backgroundColor",
+            "default": "#f9f9f9",
+            "label": "Background Color"
+          },
+          {
+            "type": "select",
+            "id": "color_scheme",
+            "options": [
+              {
+                "value": "accent-1",
+                "label": "t:sections.all.colors.accent_1.label"
+              },
+              {
+                "value": "accent-2",
+                "label": "t:sections.all.colors.accent_2.label"
+              },
+              {
+                "value": "background-1",
+                "label": "t:sections.all.colors.background_1.label"
+              },
+              {
+                "value": "background-2",
+                "label": "t:sections.all.colors.background_2.label"
+              },
+              {
+                "value": "inverse",
+                "label": "t:sections.all.colors.inverse.label"
+              }
+              ],
+              "default": "background-1",
+              "label": "t:sections.all.colors.label",
+              "info": "t:sections.all.colors.has_cards_info"
+          },
+              {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+        ],
+        "blocks": [
+        {
+          "type": "heading",
+          "name": "Person",
+          "limit": 20,
+          "settings": [
+            {
+              "type": "image_picker",
+              "id": "image",
+              "label": "Person's Image"
+            },
+            {
+              "type": "text",
+              "id": "personName",
+              "label": "Person's Name and degrees",
+              "default": "Scott Williams, MD"
+            },
+            {
+              "type": "text",
+              "id": "personOccupation",
+              "label": "Person's occupation",
+              "default": "Research and Technical Fellow"
+            }
+          ]
+        }
+      ],
+      "presets": [
+      {
+      "name": "Cards Slider",
+      "blocks": [
+        {
+          "type": "heading"
+        },
+       {
+          "type": "heading"
+        },
+        {
+          "type": "heading"
+        }
+      ]
+      }
+      ]
+      }
+  {% endschema %}
+  
+  {% stylesheet %}
+  {% endstylesheet %}
+  
+  {% javascript %}
+  {% endjavascript %}

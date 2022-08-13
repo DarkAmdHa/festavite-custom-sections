@@ -1,0 +1,285 @@
+{% style %}
+    .{{section.id}} .appearingTextContainer {
+        color: {{section.settings.textColor}};
+    }
+
+     .{{section.id}} .item-marker.fill{
+        background-color: {{section.settings.bulletPointColor}};
+        border: 2px solid {{section.settings.bulletPointColor}};
+    }
+{% endstyle %}
+  
+  <section id="slidingContainer" class='{{ section.id }} color-{{ section.settings.color_scheme }}  gradient{% if section.settings.heading == blank %} no-heading{% endif %}'>
+      <div class="container page-width">
+        {% if section.settings.image != null %}
+          <div class="pinnedImage">
+            {% assign imageWidth = section.settings.imageWidth | append: 'x' %}
+              <img src="{{ section.settings.image | img_url:imageWidth  }}" alt="{{ section.settings.image.alt | escape  }}" style='width:{{ section.settings.imageWidth }}px'>
+          </div>
+        {% endif %}
+
+          <div class="appearingTextContainer">
+              <h2 class="section-heading {{ section.settings.heading_size }}">{{ section.settings.heading }}</h2>
+              <p class="section-text">{{ section.settings.subheading }}</p>
+              <div class="sliding-container">
+                  <div class="loadingLine"></div>
+                 {%- for block in section.blocks -%}
+                    <div class="slider-item text-{{ forloop.index }}-item {% if forloop.first %}show first-slider-item{% endif %}">
+                    <span class="item-marker"></span>
+                    <span class="item-fill"></span>
+                    <div class="item-container">
+                        <h3 class="item-heading {{ block.settings.heading_size }}">{{ block.settings.heading }}</h3>
+                        <p class="item-text">{{ block.settings.paragraph }}</p>
+                    </div>
+                    </div>
+                    {%- if forloop.last -%}
+                        <div class="last-marker"></div>
+                    {%- endif -%}
+                {%- endfor -%}
+                
+              </div>
+           
+          </div>
+      </div>
+  </section>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/ScrollTrigger.min.js"></script>
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+    let textNumbers = document.querySelectorAll('.{{ section.id }} .slider-item');
+    console.log(document.querySelector('.{{ section.id }} .appearingTextContainer').offsetHeight);
+    console.log(document.querySelector('.{{ section.id }} .pinnedImage img').offsetHeight);
+    let pinnedHeight = document.querySelector('.{{ section.id }} .appearingTextContainer').offsetHeight;
+    ScrollTrigger.matchMedia({	
+	// desktop
+	"(min-width: 625px)": function() {
+		// setup animations and ScrollTriggers for screens over 800px wide (desktop) here...
+		// ScrollTriggers will be reverted/killed when the media query doesn't match anymore.
+    let tl = gsap.timeline({
+    scrollTrigger: {
+        trigger: ".{{ section.id }} .container",
+        start: "top 15%",
+        pin: '.{{ section.id }} .pinnedImage',
+        end: "bottom 70%",
+        scrub: true
+    }
+    });
+
+
+        tl.fromTo(".{{ section.id }} .loadingLine", {height: "0%"}, {height: "100%", scrollTrigger: {
+        scrub: true,
+        trigger: ".{{ section.id }} .container",
+        start: "top 30%",
+        end: "bottom 30%",
+    },
+        onUpdate: self=>{
+           let loadingPercentage = +document.querySelector('.{{ section.id }} .loadingLine').style.height.split('%')[0]/100;
+            if(loadingPercentage >= 0.97){
+              document.querySelector('.{{ section.id }} .last-marker').classList.add('show');
+            }else{
+              document.querySelector('.{{ section.id }} .last-marker').classList.remove('show');
+            }
+           let showable = Math.ceil(textNumbers.length * loadingPercentage);
+           textNumbers.forEach((item,index)=>{
+            if(index<showable){
+                item.classList.add('show');
+                item.querySelector('.item-marker').classList.add('fill');
+            }else{
+                item.classList.remove('show');
+                item.querySelector('.item-marker').classList.remove('fill');
+            }
+           })
+        }
+    });
+  }, 
+  
+	// mobile
+	"(max-width: 624px)": function() {
+		// Any ScrollTriggers created inside these functions are segregated and get
+		// reverted/killed when the media query doesn't match anymore. 
+        let tl = gsap.timeline();
+        tl.fromTo(".{{ section.id }} .loadingLine", {height: "0%"}, {height: "100%", scrollTrigger: {
+        scrub: 0.01,
+        trigger: ".{{ section.id }} .appearingTextContainer .sliding-container",
+        start: "top 30%",
+        end: "bottom 30%",
+    },
+        onUpdate: self=>{
+           let loadingPercentage = +document.querySelector('.{{ section.id }} .loadingLine').style.height.split('%')[0]/100;
+            if(loadingPercentage >= 0.97){
+              document.querySelector('.{{ section.id }} .last-marker').classList.add('show');
+            }else{
+              document.querySelector('.{{ section.id }} .last-marker').classList.remove('show');
+            }
+           let showable = Math.ceil(textNumbers.length * loadingPercentage);
+           textNumbers.forEach((item,index)=>{
+            if(index<showable){
+                item.classList.add('show');
+                item.querySelector('.item-marker').classList.add('fill');
+            }else{
+                item.classList.remove('show');
+                item.querySelector('.item-marker').classList.remove('fill');
+            }
+           })
+        }
+    });
+  }, 
+  
+	// all 
+	"all": function() {
+
+	}
+  
+});
+  </script>
+{% schema %}
+  {
+    "name": "Text Slider",
+    "settings": [
+    {
+      "type":"text",
+      "id": "heading",
+      "default": "Bring Your Foundational Health Into Focus",
+      "label": "Heading"
+    },
+    {
+      "type":"text",
+      "id": "subheading",
+      "default": "You're more than hair, skin, and nails. Build a stronger foundation for better health.",
+      "label": "Subheading"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_size.options__1.label"
+        },
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_size.options__2.label"
+        },
+        {
+          "value": "h0",
+          "label": "t:sections.all.heading_size.options__3.label"
+        }
+      ],
+      "default": "h1",
+      "label": "t:sections.all.heading_size.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Pinned Image"
+    },
+    {
+      "type": "range",
+      "id": "imageWidth",
+      "min": 400,
+      "max": 800,
+      "step": 10,
+      "default": 500,
+      "label": "Image Width"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        {
+          "value": "accent-1",
+          "label": "t:sections.all.colors.accent_1.label"
+        },
+        {
+          "value": "accent-2",
+          "label": "t:sections.all.colors.accent_2.label"
+        },
+        {
+          "value": "background-1",
+          "label": "t:sections.all.colors.background_1.label"
+        },
+        {
+          "value": "background-2",
+          "label": "t:sections.all.colors.background_2.label"
+        },
+        {
+          "value": "inverse",
+          "label": "t:sections.all.colors.inverse.label"
+        }
+        ],
+        "default": "background-1",
+        "label": "t:sections.all.colors.label",
+        "info": "t:sections.all.colors.has_cards_info"
+      },
+      {
+        "type":"color",
+        "id": "textColor",
+        "default": "#142b6f",
+        "label": "Text Color"
+      },
+      {
+        "type":"color",
+        "id": "bulletPointColor",
+        "default": "#142b6f",
+        "label": "Bullet Point Color"
+      }
+    ],
+    "blocks": [
+    {
+      "type": "heading",
+      "name": "Slider Text",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "default": "Brain Health",
+          "label": "Heading"
+        },
+        {
+          "type": "select",
+          "id": "heading_size",
+          "options": [
+            {
+              "value": "h2",
+              "label": "t:sections.all.heading_size.options__1.label"
+            },
+            {
+              "value": "h1",
+              "label": "t:sections.all.heading_size.options__2.label"
+            },
+            {
+              "value": "h0",
+              "label": "t:sections.all.heading_size.options__3.label"
+            }
+          ],
+          "default": "h1",
+          "label": "t:sections.all.heading_size.label"
+        },
+        {
+          "type": "text",
+          "id": "paragraph",
+          "default": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+          "label": "Text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+  {
+  "name": "Text Slider",
+  "blocks": [
+    {
+      "type": "heading"
+    }
+  ]
+  }
+  ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
